@@ -3,14 +3,15 @@ const app = express();
 require('dotenv').config();
 const main =  require('./config/db')
 const cookieParser =  require('cookie-parser');
+const authRouter = require('./routes/userAuth');
 
 
 
 app.use(express.json());
 app.use(cookieParser());
+app.use('/user',authRouter);
 
 
-// heloooo
 
 main()
 .then(async ()=>{
