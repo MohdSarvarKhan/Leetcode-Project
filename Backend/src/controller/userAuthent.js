@@ -52,4 +52,14 @@ const login = async (req,res)=>{
     }
 }
 
-module.exports = {register,login,logout}
+const logout = async (req,res)=>{
+    try{
+
+    }
+
+    catch(err){
+
+    }
+}
+
+module.exports = {register,login,logout};
