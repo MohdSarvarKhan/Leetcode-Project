@@ -43,4 +43,50 @@ async function fetchData() {
 return await fetchData();
 }
 
-module.exports  = (getLanguageById,submitBatch);
+const waiting = async(timer)=>{
+  setTimeout(()=>{
+    return 1;
+  },timer)
+}
+
+const submitToken = async(resultToken)=>{
+
+
+const options = {
+  method: 'GET',
+  url: 'https://judge0-ce.p.rapidapi.com/submissions/batch',
+  params: {
+    tokens: resultToken.join(","),
+    fields: '*'
+  },
+  headers: {
+    'x-rapidapi-key': '15bbd07786msh61801e2e7c2710dp150a0cjsn347cbd844cc9',
+    'x-rapidapi-host': 'judge0-ce.p.rapidapi.com'
+  }
+};
+
+async function fetchData() {
+	try {
+		const response = await axios.request(options);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+
+while(true){
+  const result = await fetchData();
+
+const IsResultObtained = result.submissions.every((r)=>r.status_id>2);
+
+if(IsResultObtained)
+  return result.submissions;
+
+await waiting(1000);
+}
+
+
+}
+
+module.exports  = (getLanguageById,submitBatch,submitToken);
