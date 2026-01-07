@@ -1,4 +1,5 @@
-const { getLanguageById , submitBatch} = require("../utils/problemUtility");
+const { getLanguageById,submitBatch,submitToken} = require("../utils/problemUtility");
+const Problem = require('../models/problem');
 
 
 
@@ -36,9 +37,18 @@ try{
             }
         }
     }
+const userProblem = await Problem.create({
+    ...req.body,
+    problemCreator:req.result._id
 
+});
+
+res.status(201).send("Problem Saved Successfully ");
 }
 catch(err){
-
+    res.status(400).send("Error : " +err);
     }
 }
+
+
+module.exports = createProblem;
